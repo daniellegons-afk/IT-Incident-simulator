@@ -1,5 +1,5 @@
-# JavaScript Practice
+# IT Incident simulator
 
-Small Node.js projects: hashed login system and an incident-response step grader.
+ incident-response step grader.
 
 Run: node sim.js
