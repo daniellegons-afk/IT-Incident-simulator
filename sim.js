@@ -9,34 +9,23 @@ const messages = [ "I declare severity high",
                    "Let's  reboot it"]
 
                    
-//Input: the list of messages and one step
-//Output: a number, the possotion of the first matchhing message (or -1)
+                   
+const positions = db.checkpoints.map(step => messages.findIndex(m => checkstep(m, step)));
 
-const pos = messages.findIndex(m => m.toLowerCase().includes("declare severity"))
-
-db.checkpoints.forEach(step =>{
-    const pos = messages.findIndex(m => checkstep(m, step));
-    console.log(`${step} -> ${pos}`);
-})
-
-/*for (const message of messages){
-        let any = false;
-        pos.findindex(checkstep(m, step)){
-            db.checkpoints.forEach((step) => {
-                if(checkstep(message, step)){
-                    console.log(`"${message}" -> ${step} `);
-                    any = true;
-             }
-            
-         });
-        if(!any) console.log(`"${message}" -> (nothing)`);
-        }
-        
-           
-
-    
-}*/
+let last = -1
+let inOrder = true
+for(let i = 0; i < positions.length; i++){
+    const p = positions[i];
+    if(p  === -1){
+        continue;
+    }
+    if(p < last){
+        inOrder = false;
+    } 
+    last = p;
+}
 
 const total = countSteps(messages.join(" "), db.checkpoints);
 console.log(`Score: ${total}/ ${db.checkpoints.length}`);
-console.log(pos)
+console.log(positions);
+console.log(`In order: ${inOrder}`);
