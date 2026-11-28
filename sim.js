@@ -1,15 +1,20 @@
 import {scenarios} from "./scenarios.mjs";
 import { checkstep, countSteps } from "./grader.mjs";
+import readline from 'readline/promises';
+import {stdin as input, stdout as output} from 'process';
 
 
 const db = scenarios.find(s => s.name === "Database outage");
 
-const messages = [ "I declare severity high",
-                   "I will notify manager",
-                   "Let's  reboot it"]
+const rl = readline.createInterface({ input, output});
+const messages = [];
 
-                   
-                   
+for(let i = 0; i < 3; i++){
+    const text = await rl.question("Trainee: ");
+    messages.push(text);
+}
+rl.close();
+
 const positions = db.checkpoints.map(step => messages.findIndex(m => checkstep(m, step)));
 
 let last = -1
